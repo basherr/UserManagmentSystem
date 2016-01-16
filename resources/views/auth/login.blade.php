@@ -1,26 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" ng-controller="AuthCtrl">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                    <form class="form-horizontal" role="form" ng-submit="login()" >
                         {!! csrf_field() !!}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <span class="help-block alert alert-danger" ng-if="credsError ? true : false ">
+                            <strong>{[{ credsError }]}</strong>
+                        </span>
+                        <div class="form-group {[{ emailError }]}">
                             <label class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                                <input type="email" class="form-control" name="email" ng-model="userCred.email" value="{{ old('email') }}">
+                                <span class="help-block alert alert-danger" ng-if="emailError ? true : false ">
+                                    <strong>{[{ emailError }]}</strong>
+                                </span>
                             </div>
                         </div>
 
@@ -28,13 +28,11 @@
                             <label class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input type="password" class="form-control" name="password">
+                                <input type="password" class="form-control" name="password" ng-model="userCred.password" >
 
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
+                                <span class="help-block alert alert-danger" ng-if="passwordError ? true : false ">
+                                    <strong>{[{ passwordError }]}</strong>
+                                </span>
                             </div>
                         </div>
 
@@ -42,7 +40,7 @@
                             <div class="col-md-6 col-md-offset-4">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" name="remember"> Remember Me
+                                        <input type="checkbox" name="remember" ng-model="userCred.remember"> Remember Me
                                     </label>
                                 </div>
                             </div>
@@ -63,4 +61,7 @@
         </div>
     </div>
 </div>
+@endsection
+@section('javascript')
+{!! Html::script('js/controllers/AuthCtrl.js') !!}
 @endsection
