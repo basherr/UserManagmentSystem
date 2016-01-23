@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect()->to('home');
-});
-
+// Route::get('/', function () {
+//     return redirect()->to('home');
+// });
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -26,11 +25,32 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+// Route::group(['middleware' => ['web']], function () {
+//     //
+// });
+
+// Route::group(['middleware' => 'web'], function () {
+//     Route::auth();
+//     Route::get('/home', 'HomeController@index');
+// });
+
+
+// Route::get('{catchall}', function () {
+//     return view('app');
+// })->where('catchall', '(.*)');
+
+
+Route::get('/', function () {
+    return view('layouts.app');
 });
 
-Route::group(['middleware' => 'web'], function () {
-    Route::auth();
-    Route::get('/home', 'HomeController@index');
+Route::group(['prefix' => 'api'], function()
+{
+    Route::post('authenticate', 'RegistrationController@authenticate');
+	Route::post('register', 'RegistrationController@store');
+});
+
+Route::group(['middleware' => ['web', 'jwt.auth']], function() {
+    Route::get('authenticate/user', 'UsersController@getAuthUser');
+	Route::get('users', 'UsersController@index');
 });

@@ -8,11 +8,11 @@
     <title>Users Managment System</title>
 
     <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'> --}}
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    {!! Html::style('css/bootstrap.min.css') !!}
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
@@ -24,10 +24,11 @@
             margin-right: 6px;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> --}}
+    {!! Html::script('js/jquery.min.js') !!}
     {!! Html::script('js/angular.js') !!}
 </head>
-<body id="app-layout" ng-app="UsersManagment">
+<body id="app-layout" ng-app="authApp">
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -41,7 +42,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="#" ng-click="reloadHome()">
+                <a class="navbar-brand" href="#/">
                     Users Managment System
                 </a>
             </div>
@@ -49,38 +50,40 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="#" >Home</a></li>
+                    <li><a href="#/" >Home</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="#" >Login</a></li>
-                        <li><a href="#" >Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" ng-click="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                    
+                        <li><a href="#login" ng-if="!authenticated">Login</a></li>
+                        <li><a href="#register" ng-if="!authenticated">Register</a></li>
+                    
+                        <li class="dropdown" ng-if="authenticated">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="#" ><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="#logout"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                             </ul>
                         </li>
-                    @endif
                 </ul>
             </div>
         </div>
     </nav>
-
-    @yield('content')
+    
+    <div ui-view></div>
 
     <!-- JavaScripts -->
-    {!! Html::script('js/services/Auth.js') !!}
+    {!! Html::script('js/angular-resource.js') !!}
+    {!! Html::script('js/angular-ui-router.min.js') !!}
+    {!! Html::script('../node_modules/satellizer/satellizer.js') !!}
     {!! Html::script('js/services/User.js') !!}
-    @yield('javascript')
     {!! Html::script('js/app.js') !!}
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {!! Html::script('js/controllers/authController.js') !!}
+    {!! Html::script('js/controllers/userController.js') !!}
+    {!! Html::script('js/bootstrap.min.js') !!}
 </body>
 </html>

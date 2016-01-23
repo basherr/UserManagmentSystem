@@ -121,4 +121,14 @@ class AuthController extends Controller
 
         return $this->sendFailedLoginResponse($request);
     }
+    /**
+     * Methods gets called when user is authenticated
+     *
+     * @param null
+     * @return null
+     */
+    public function authenticated()
+    {
+        return response()->json(['success' => 'true']);
+    }
 }
