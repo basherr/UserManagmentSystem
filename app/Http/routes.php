@@ -25,19 +25,6 @@
 |
 */
 
-// Route::group(['middleware' => ['web']], function () {
-//     //
-// });
-
-// Route::group(['middleware' => 'web'], function () {
-//     Route::auth();
-//     Route::get('/home', 'HomeController@index');
-// });
-
-
-// Route::get('{catchall}', function () {
-//     return view('app');
-// })->where('catchall', '(.*)');
 
 
 Route::get('/', function () {
@@ -53,4 +40,12 @@ Route::group(['prefix' => 'api'], function()
 Route::group(['middleware' => ['web', 'jwt.auth']], function() {
     Route::get('authenticate/user', 'UsersController@getAuthUser');
 	Route::get('users', 'UsersController@index');
+	Route::get('user/{id}', 'UsersController@show');
+	Route::put('user/update', 'UsersController@update');
+	Route::delete('user/delete/{id}', 'UsersController@destroy');
 });
+
+
+// Route::get('{catchall}', function () {
+//     return view('layouts.app');
+// })->where('catchall', '(.*)');

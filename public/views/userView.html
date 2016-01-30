@@ -1,13 +1,36 @@
-<div class="col-sm-6 col-sm-offset-3">
-    <div class="well">
-        <h3>Users</h3>
-        <button ui-sref="create">Create</button>
-        <ul class="list-group" >
-            <li class="list-group-item" ng-repeat="user in users">
-                <h4>[[user.name]]</h4>
-                <h5>[[ user.email ]]</h5>
-                <button><i class="fa fa-btn fa-edit"></i></button>
-            </li>
-        </ul>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading user-view-panel"><h4 class="pull-left">Users</h4><button ui-sref="create" class="btn btn-primary pull-right">Add new Record</button></div>
+                <div class="panel-body">
+                    <div class="alert alert-success" ng-if="success_message">[[ success_message ]]</div>
+                    <div class="alert alert-danger" ng-if="errors.length">
+                        <div ng-repeat="error in errors">[[ error ]]</div>  
+                    </div>
+                    <div class="search-bar">
+                        <span class="pull-left">Search By :</span>
+                        <input type="text" ng-model="name" class="form-control pull-right" placeholder="Name">
+                    </div>
+                    <table class="table table-stripped">
+                        <thead>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in users | filter : name">
+                                <td><h5>[[ user.name | uppercase ]]</h4></td>    
+                                <td><h6>[[ user.email ]]</h5></td>    
+                                <td>1</td>    
+                                <td>
+                                    <button class="btn btn-sm btn-info" ng-click="edit([[user.id]])">edit</button>
+                                    <button class="btn btn-sm btn-danger" ng-click="delete([[user.id]])">Delete</button>
+                                </td>    
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </div>
 </div>

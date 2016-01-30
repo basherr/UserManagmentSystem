@@ -1,0 +1,23 @@
+body {
+        font-family: 'Lato';
+    }
+
+.fa-btn {
+    margin-right: 6px;
+}
+.search-bar {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    float: right;
+}
+.search-bar input[type=text]
+{
+	width: 70%;
+	margin-bottom: 20px;
+}
+
+.user-view-panel {
+    padding-top: 16px !important;
+    padding-bottom: 53px !important;
+}

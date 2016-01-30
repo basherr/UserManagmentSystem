@@ -3,28 +3,32 @@
     'use strict';
 
     angular
-        .module('authApp')
+        .module('UsersManagmentApp')
         .controller('AuthCtrl', AuthController);
 
 
-    function AuthController($auth,$scope, $state) {
+    function AuthController($auth, $scope, $state,$rootScope, $http) {
 
-        if(localStorage.getItem('auth'))
+        if(localStorage.getItem('auth') !== undefined)
         {
-            $state.go('users');
+            // $state.go('users');
         }
         $scope.login = function() {
+            $auth.login($scope.auth)
+                 .then( function(data) {
 
-            var credentials = {
-                email: vm.email,
-                password: vm.password
-            }
-            
-            // Use Satellizer's $auth service to login
-            $auth.login(credentials)
-                 .then(function(data) {
-                localStorage.setItem('auth', true);
+                return $http.get('authenticate/user');
                 // If login is successful, redirect to the users state
+            }, function(errors) {
+                console.log(errors);
+            })
+            .then(function(response) {
+                var user = JSON.stringify(response.data.user);
+
+                localStorage.setItem('user', user);
+                $rootScope.authenticated = true;
+                $rootScope.currentUser = response.data.user;
+
                 $state.go('users', {});
             });
         }

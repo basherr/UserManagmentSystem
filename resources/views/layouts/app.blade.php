@@ -8,27 +8,15 @@
     <title>Users Managment System</title>
 
     <!-- Fonts -->
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'> --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-
-    <!-- Styles -->
+    {!! Html::style('css/style.css') !!}
     {!! Html::style('css/bootstrap.min.css') !!}
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-
-    <style>
-        body {
-            font-family: 'Lato';
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> --}}
+    
     {!! Html::script('js/jquery.min.js') !!}
     {!! Html::script('js/angular.js') !!}
 </head>
-<body id="app-layout" ng-app="authApp">
+<body id="app-layout" ng-app="UsersManagmentApp">
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
@@ -40,41 +28,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="#/">
+                <a class="navbar-brand" href="#users">
                     Users Managment System
                 </a>
             </div>
-
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="#/" >Home</a></li>
+                    <li><a href ui-sref="users" ng-if="authenticated">Home</a></li>
                 </ul>
-
-                <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    
-                        <li><a href="#login" ng-if="!authenticated">Login</a></li>
-                        <li><a href="#register" ng-if="!authenticated">Register</a></li>
-                    
-                        <li class="dropdown" ng-if="authenticated">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#logout"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
-                            </ul>
-                        </li>
+                    <li><a href="#login"  ng-if="!authenticated" ui-sref="login">Login</a></li>
+                    <li><a href ui-sref="register" ng-if="!authenticated">Register</a></li>
+                    <li><a href ng-click="logout();" ng-if="authenticated"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
                 </ul>
             </div>
         </div>
     </nav>
-    
-    <div ui-view></div>
+    <div class="container">
+        <h3>Welcome [[ currentUser.name ]]</h3>
+        <div ui-view></div>
+    </div>
 
     <!-- JavaScripts -->
     {!! Html::script('js/angular-resource.js') !!}
@@ -84,6 +58,7 @@
     {!! Html::script('js/app.js') !!}
     {!! Html::script('js/controllers/authController.js') !!}
     {!! Html::script('js/controllers/userController.js') !!}
+    {!! Html::script('js/controllers/userEditController.js') !!}
     {!! Html::script('js/bootstrap.min.js') !!}
 </body>
 </html>
